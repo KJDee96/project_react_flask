@@ -6,6 +6,7 @@ client/.pnp
 client/.pnp.js
 server/venv
 server/api/__pycache__
+**/__pycache__
 
 # testing
 client/coverage

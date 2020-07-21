@@ -17,8 +17,9 @@ class User(db.Model):
     email = db.Column(db.Text)
     gender = db.Column(gender_enum)
     role = db.Column(role_enum)
-    work_experience = db.relationship('work_experience', backref='user', lazy='dynamic')
-    saved_jobs = db.relationship('saved_jobs', backref='user', lazy='dynamic')
+    work_experience = db.relationship('WorkExperience', backref='user', lazy='dynamic')
+    saved_jobs = db.relationship('SavedJob', backref='user', lazy='dynamic')
+    applications = db.relationship('Application', backref='user', lazy='dynamic')
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -50,9 +51,20 @@ class Job(db.Model):
     location = db.Column(db.Text)
     post_date = db.Column(db.Date)
     salary_offered = db.Column(db.Text)
+    skills = db.relationship('JobSkills', backref='job', lazy='dynamic')
+    applications = db.relationship('Application', backref='job', lazy='dynamic')
 
     def __repr__(self):
         return '<Job {}>'.format(self.job_title)
+
+
+class Application(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    job_id = db.Column(db.Integer, db.ForeignKey('job.id'))
+
+    def __repr__(self):
+        return '<Application {}>'.format(self.name)
 
 
 class WorkExperience(db.Model):
@@ -68,14 +80,25 @@ class WorkExperience(db.Model):
     salary = db.Column(db.Text)
     created_at = db.Column(db.DateTime)
     updated_at = db.Column(db.DateTime)
+    skills = db.relationship('WorkExperienceSkills', backref='work_experience', lazy='dynamic')
 
     def __repr__(self):
         return '<Work Experience {}>'.format(self.position_name)
 
 
+class RelatedSkills(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
+    related_skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
+
+    def __repr__(self):
+        return '<Skill {}>'.format(self.name)
+
+
 class Skill(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
+    skills = db.relationship('RelatedSkills', backref='related_skills', foreign_keys=[RelatedSkills.related_skill_id], lazy='dynamic')
 
     def __repr__(self):
         return '<Skill {}>'.format(self.name)
@@ -88,3 +111,21 @@ class SavedJob(db.Model):
 
     def __repr__(self):
         return '<Saved Job {}>'.format(self.id)
+
+
+class WorkExperienceSkills(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    work_experience_id = db.Column(db.Integer, db.ForeignKey('work_experience.id'))
+    skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
+
+    def __repr__(self):
+        return '<Work Experience Skill {}>'.format(self.id)
+
+
+class JobSkills(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    job_id = db.Column(db.Integer, db.ForeignKey('job.id'))
+    skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
+
+    def __repr__(self):
+        return '<Job Skill {}>'.format(self.id)
