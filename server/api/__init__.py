@@ -3,7 +3,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 import os
 from .extensions import db, guard, mail, migrate
-from .commands import create_test_users
+from .commands import import_data
 from .models import User
 from .routes import api
 from .config import Config
@@ -18,7 +18,7 @@ def create_app():
     mail.init_app(app)
     migrate.init_app(app, db)
 
-    app.cli.add_command(create_test_users)
+    app.cli.add_command(import_data)
 
     app.register_blueprint(api)
 
