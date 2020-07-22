@@ -25,8 +25,11 @@ class User(db.Model):
         return '<User {}>'.format(self.username)
 
     @classmethod
-    def lookup(cls, username):
-        return cls.query.filter_by(username=username).one_or_none()
+    def lookup(cls, userdata):
+        if userdata['username'] != '':
+            return cls.query.filter_by(username=userdata["username"]).one_or_none()
+        else:
+            return cls.query.filter_by(email=userdata["email"]).one_or_none()
 
     @classmethod
     def identify(cls, id):
@@ -98,7 +101,8 @@ class RelatedSkills(db.Model):
 class Skill(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
-    skills = db.relationship('RelatedSkills', backref='related_skills', foreign_keys=[RelatedSkills.related_skill_id], lazy='dynamic')
+    skills = db.relationship('RelatedSkills', backref='related_skills', foreign_keys=[RelatedSkills.related_skill_id],
+                             lazy='dynamic')
 
     def __repr__(self):
         return '<Skill {}>'.format(self.name)

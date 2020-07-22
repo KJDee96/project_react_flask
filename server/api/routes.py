@@ -10,12 +10,26 @@ api = Blueprint('api', __name__)
 def login():
     req = request
     json_data = req.get_json()
-    username = json_data['username']
+
+    try:
+        username = json_data['username']
+    except KeyError:
+        username = ''
+
+    try:
+        email = json_data['email']
+    except KeyError:
+        email = ''
+
     password = json_data['password']
 
-    user = guard.authenticate(username, password)
+    userdata = {
+        "username": username,
+        "email": email,
+    }
+    user = guard.authenticate(userdata, password)
     token = guard.encode_jwt_token(user)
-    return jsonify({'access_token': token, 'username': username}), 200
+    return jsonify({'access_token': token}), 200
 
 
 @api.route('/register', methods=['POST'])

@@ -5,8 +5,8 @@ client/node_modules
 client/.pnp
 client/.pnp.js
 server/venv
-server/api/__pycache__
-**/__pycache__
+__pycache__
+
 
 # testing
 client/coverage
@@ -29,3 +29,4 @@ client/yarn-error.log*
 
 .idea
 .vscode
+*.csv
