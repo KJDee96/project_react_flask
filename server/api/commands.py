@@ -1,23 +1,29 @@
 import csv
 import json
 import click
+import random
 from flask.cli import with_appcontext
 from .extensions import guard
 from .models import *
+from tqdm import tqdm  # progress bar
 
 
 @click.command(name='import_data')
 @with_appcontext
 def import_data():
-    import_users()
-    import_jobs()
-    import_work_experience()
-    import_skill()
-    import_related_skills()
+    import_users('/home/kieran/Dev/Python/Flask/project_react_flask/server/data/users/users_merged.csv')
+    import_jobs('/home/kieran/Dev/Python/Flask/project_react_flask/server/data/jobs/emed_40k_new.csv')
+    import_work_experience('/home/kieran/Dev/Python/Flask/project_react_flask/server/data/work_experience/Experience.csv')
+    import_skill('/home/kieran/Dev/Python/Flask/project_react_flask/server/data/skils/cleaned_related_skills.json')
+    import_related_skills('/home/kieran/Dev/Python/Flask/project_react_flask/server/data/skils/cleaned_related_skills.json')
+    generate_apps()
 
 
-def import_users():
-    print('Importing Users')
+def csv_row_count(file):
+    return len(list(csv.reader(open(file, 'r'), quoting=csv.QUOTE_MINIMAL))) - 1  # minus 1 for header row
+
+
+def import_users(file):
     admin = User(username='Kieran',
                  password=guard.hash_password('test'),
                  email='kieran@test.com',
@@ -29,10 +35,11 @@ def import_users():
     db.session.add(admin)
     db.session.commit()
 
-    with open('/home/kieran/Dev/Python/Flask/project_react_flask/server/data/users/users_merged.csv',
+    row_count = csv_row_count(file)
+    with open(file,
               newline='\n') as file:
         reader = csv.DictReader(file)
-        for row in reader:
+        for row in tqdm(reader, total=row_count, desc='Importing Users'):
             user = User(username=row['username'],
                         password=guard.hash_password('test'),
                         email=row['email'],
@@ -44,13 +51,14 @@ def import_users():
             db.session.commit()
 
 
-def import_jobs():
-    print('Importing Jobs')
+def import_jobs(file):
     failed_count = 0
-    with open('/home/kieran/Dev/Python/Flask/project_react_flask/server/data/jobs/emed_40k_new.csv',
+    row_count = csv_row_count(file)
+
+    with open(file,
               newline='\n') as file:
         reader = csv.DictReader(file, delimiter=',', lineterminator='\n', quoting=csv.QUOTE_MINIMAL)
-        for row in reader:
+        for row in tqdm(reader, total=row_count, desc='Importing Jobs'):
             try:
                 job = Job(category=row['category'],
                           company_name=row['company_name'],
@@ -68,15 +76,15 @@ def import_jobs():
     print(f'{failed_count} jobs failed to import')
 
 
-def import_work_experience():
-    print('Importing Work Experience')
+def import_work_experience(file):
     user_id = 2  # admin/employer is 1, candidates start from 2 based on import
     old_id = None
+    row_count = csv_row_count(file)
 
-    with open('/home/kieran/Dev/Python/Flask/project_react_flask/server/data/work_experience/Experience.csv',
+    with open(file,
               newline='\n') as file:
         reader = csv.DictReader(file)
-        for row in reader:
+        for row in tqdm(reader, total=row_count, desc='Importing Work Experience'):
             work = WorkExperience(employer_name=row['Employer.Name'],
                                   position_name=row['Position.Name'],
                                   job_description=row['Job.Description'],
@@ -87,6 +95,8 @@ def import_work_experience():
                                   created_at=row['Created.At'],
                                   updated_at=row['Updated.At'],
                                   user_id=user_id)
+
+            # If dates aren't null or empty, add them
             if row['Start.Date'] != '' and row['Start.Date'] != 'NA':
                 work.start_date = row['Start.Date']
             if row['End.Date'] != '' and row['End.Date'] != 'NA':
@@ -102,21 +112,23 @@ def import_work_experience():
             db.session.commit()
 
 
-def import_skill():
-    print('Importing Skils')
-    with open('/home/kieran/Dev/Python/Flask/project_react_flask/server/data/skils/cleaned_related_skills.json') as json_file:
-        for line in json_file:
+def import_skill(file):
+    row_count = len(open(file, 'r').readlines())
+
+    with open(file) as json_file:
+        for line in tqdm(json_file, total=row_count, desc='Importing Skills'):
             data = json.loads(line)
             skill = Skill(name=data['name'])
             db.session.add(skill)
             db.session.commit()
 
 
-def import_related_skills():
-    print('Importing Related Skils')
+def import_related_skills(file):
+    row_count = len(open(file, 'r').readlines())
+
     failed_count = 0
-    with open('/home/kieran/Dev/Python/Flask/project_react_flask/server/data/skils/cleaned_related_skills.json') as json_file:
-        for line in json_file:
+    with open(file) as json_file:
+        for line in tqdm(json_file, total=row_count, desc='Importing Related Skils'):
             data = json.loads(line)
             try:
                 skill = Skill.query.filter_by(name=data['name']).one_or_none()
