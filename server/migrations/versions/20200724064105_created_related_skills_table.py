@@ -1,8 +1,8 @@
-"""Added related skills
+"""Created related skills table
 
-Revision ID: 5a53df60f031
-Revises: 3ebedd1c0c83
-Create Date: 2020-07-20 21:46:41.195263
+Revision ID: c4b60a7cb56f
+Revises: 7424d644a7aa
+Create Date: 2020-07-24 06:41:05.585681
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '5a53df60f031'
-down_revision = '3ebedd1c0c83'
+revision = 'c4b60a7cb56f'
+down_revision = '7424d644a7aa'
 branch_labels = None
 depends_on = None
 

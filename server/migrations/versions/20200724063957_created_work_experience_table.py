@@ -1,8 +1,8 @@
-"""Added Work Experience
+"""Created work experience table
 
-Revision ID: 1ffbf7b34164
-Revises: 0de2acf9762d
-Create Date: 2020-07-20 16:41:29.259964
+Revision ID: 40c5971ba9c1
+Revises: 6ac77d94b04a
+Create Date: 2020-07-24 06:39:57.073944
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '1ffbf7b34164'
-down_revision = '0de2acf9762d'
+revision = '40c5971ba9c1'
+down_revision = '6ac77d94b04a'
 branch_labels = None
 depends_on = None
 

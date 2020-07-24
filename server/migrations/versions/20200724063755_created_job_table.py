@@ -1,8 +1,8 @@
-"""Added Job
+"""Created job table
 
-Revision ID: 0de2acf9762d
-Revises: 651f05d33302
-Create Date: 2020-07-20 16:15:17.294360
+Revision ID: 6ac77d94b04a
+Revises: 10225403a36e
+Create Date: 2020-07-24 06:37:55.077045
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = '0de2acf9762d'
-down_revision = '651f05d33302'
+revision = '6ac77d94b04a'
+down_revision = '10225403a36e'
 branch_labels = None
 depends_on = None
 
@@ -25,18 +25,18 @@ def upgrade():
     job_type_enum.create(op.get_bind())
 
     op.create_table('job',
-                    sa.Column('id', sa.Integer(), nullable=False),
-                    sa.PrimaryKeyConstraint('id')
-                    )
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('category', sa.Text(), nullable=True),
+    sa.Column('company_name', sa.Text(), nullable=True),
+    sa.Column('job_description', sa.Text(), nullable=True),
+    sa.Column('job_title', sa.Text(), nullable=True),
+    sa.Column('location', sa.Text(), nullable=True),
+    sa.Column('post_date', sa.Date(), nullable=True),
+    sa.Column('salary_offered', sa.Text(), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
 
-    op.add_column('job', sa.Column('category', sa.Text(), nullable=True))
-    op.add_column('job', sa.Column('company_name', sa.Text(), nullable=True))
-    op.add_column('job', sa.Column('job_description', sa.Text(), nullable=True))
-    op.add_column('job', sa.Column('job_title', sa.Text(), nullable=True))
     op.add_column('job', sa.Column('job_type', job_type_enum, nullable=True))
-    op.add_column('job', sa.Column('location', sa.Text(), nullable=True))
-    op.add_column('job', sa.Column('post_date', sa.Date(), nullable=True))
-    op.add_column('job', sa.Column('salary_offered', sa.Text(), nullable=True))
     # ### end Alembic commands ###
 
 

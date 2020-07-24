@@ -12,12 +12,12 @@ SavedJob = db.Table('saved_job',
                     db.Column('job_id', db.Integer, db.ForeignKey('job.id'))
                     )
 
-WorkExperienceSkills = db.Table('work_experience_skills',
+WorkExperienceSkills = db.Table('work_experience_skill',
                                 db.Column('work_experience_id', db.Integer, db.ForeignKey('work_experience.id')),
                                 db.Column('skill_id', db.Integer, db.ForeignKey('skill.id'))
                                 )
 
-JobSkills = db.Table('job_skills',
+JobSkills = db.Table('job_skill',
                      db.Column('job_id', db.Integer, db.ForeignKey('job.id')),
                      db.Column('skill_id', db.Integer, db.ForeignKey('skill.id'))
                      )
@@ -119,6 +119,7 @@ class Skill(db.Model):
                            back_populates="skills")
     work_experience = db.relationship('WorkExperience', secondary=WorkExperienceSkills,
                                       back_populates="skills")
+    related_skills = db.relationship('RelatedSkills', foreign_keys='RelatedSkills.skill_id',)
 
 
 def __repr__(self):
@@ -129,8 +130,7 @@ class RelatedSkills(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
     related_skill_id = db.Column(db.Integer, db.ForeignKey('skill.id'))
-    skill = db.relationship('Skill', foreign_keys='RelatedSkills.skill_id')
-    related_skill = db.relationship('Skill', foreign_keys='RelatedSkills.related_skill_id')
+    skill = db.relationship('Skill', foreign_keys='RelatedSkills.related_skill_id')
 
     def __repr__(self):
-        return '<Skill {}>'.format(self.id)
+        return '<Related Skill {}>'.format(self.id)
