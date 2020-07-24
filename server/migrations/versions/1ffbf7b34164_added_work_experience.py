@@ -27,6 +27,7 @@ def upgrade():
     sa.Column('city', sa.Text(), nullable=True),
     sa.Column('county', sa.Text(), nullable=True),
     sa.Column('postcode', sa.Text(), nullable=True),
+    sa.Column('start_date', sa.Date(), nullable=True),
     sa.Column('end_date', sa.Date(), nullable=True),
     sa.Column('salary', sa.Text(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),

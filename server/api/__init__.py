@@ -4,7 +4,7 @@ from logging.handlers import RotatingFileHandler
 import os
 from .extensions import db, guard, mail, migrate
 from .commands import import_data
-from .models import User
+from .models import *
 from .routes import api
 from .config import Config
 
@@ -24,7 +24,9 @@ def create_app():
 
     @app.shell_context_processor
     def make_shell_context():
-        return {'db': db, 'User': User}
+        return {'db': db, 'User': User, 'Job': Job, 'Application': Application, 'SavedJob': SavedJob,
+                'WorkExperience': WorkExperience, 'Skill': Skill, 'RelatedSkills': RelatedSkills,
+                'WorkExperienceSkills': WorkExperienceSkills, 'JobSkills': JobSkills}
 
     if not app.debug:
         if not os.path.exists('logs'):
