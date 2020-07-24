@@ -143,3 +143,15 @@ def import_related_skills(file):
     print(f'{failed_count} related skills blank')
 
 
+def generate_apps():
+    # For each user, randomly assign 0-15 applications
+    users = db.engine.execute('select * from "user" where role = \'candidate\'').fetchall()
+    job_count = len(Job.query.all())
+    for user in tqdm(users, total=len(users), desc='Generating applications'):
+        i = 0
+        while i <= random.randint(0, 15):
+            u = User.query.filter_by(id=user.id).one_or_none()
+            job = Job.query.filter_by(id=random.randint(1, job_count)).one_or_none()
+            u.applications.append(job)
+            db.session.commit()
+            i += 1
