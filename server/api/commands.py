@@ -16,7 +16,6 @@ def import_data():
     import_work_experience('/home/kieran/Dev/Python/Flask/project_react_flask/server/data/work_experience/Experience.csv')
     import_skill('/home/kieran/Dev/Python/Flask/project_react_flask/server/data/skils/cleaned_related_skills.json')
     import_related_skills('/home/kieran/Dev/Python/Flask/project_react_flask/server/data/skils/cleaned_related_skills.json')
-    generate_apps()
 
 
 def csv_row_count(file):
@@ -143,15 +142,45 @@ def import_related_skills(file):
     print(f'{failed_count} related skills blank')
 
 
+@click.command(name='generate_apps')
+@with_appcontext
 def generate_apps():
     # For each user, randomly assign 0-15 applications
+
     users = db.engine.execute('select * from "user" where role = \'candidate\'').fetchall()
+    # sqlalchemy is having trouble with querying enums :(
+
     job_count = len(Job.query.all())
     for user in tqdm(users, total=len(users), desc='Generating applications'):
         i = 0
         while i <= random.randint(0, 15):
-            u = User.query.filter_by(id=user.id).one_or_none()
-            job = Job.query.filter_by(id=random.randint(1, job_count)).one_or_none()
+            u = User.query.get(user.id)
+            job = Job.query.get(random.randint(1, job_count))
             u.applications.append(job)
             db.session.commit()
             i += 1
+
+
+@click.command(name='generate_skills')
+@with_appcontext
+def generate_skills():
+    # For each job + work experience, choose 3 random skills and for each random skill, choose 1-5 related skills
+    jobs = Job.query.order_by(Job.id).all()
+    work_ex = WorkExperience.query.order_by(WorkExperience.id).all()
+
+    for job in tqdm(jobs, total=len(jobs), desc='Generating job skills'):
+        skill_loop(job)
+
+    for ex in tqdm(work_ex, total=len(work_ex), desc='Generating work experience skills'):
+        skill_loop(ex)
+
+
+def skill_loop(model):
+    for skill in random.sample(Skill.query.all(), 3):
+        try:
+            model.skills.append(skill)
+            for related_skill in random.sample(skill.related_skills, random.randint(1, 5)):
+                model.skills.append(related_skill.skill)
+            db.session.commit()
+        except ValueError:
+            pass

@@ -3,7 +3,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 import os
 from .extensions import db, guard, mail, migrate
-from .commands import import_data
+from .commands import import_data, generate_apps, generate_skills
 from .models import *
 from .routes import api
 from .config import Config
@@ -19,7 +19,8 @@ def create_app():
     migrate.init_app(app, db)
 
     app.cli.add_command(import_data)
-
+    app.cli.add_command(generate_apps)
+    app.cli.add_command(generate_skills)
     app.register_blueprint(api)
 
     @app.shell_context_processor
