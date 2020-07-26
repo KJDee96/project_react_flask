@@ -14,3 +14,6 @@ Install wheel also
 Install requirements
 
 `pip install -r requirements.txt`
+
+## Run
+`gunicorn -c python:config.gunicorn "api.app:create_app()"`

@@ -3,7 +3,7 @@ import json
 import click
 import random
 from flask.cli import with_appcontext
-from .extensions import guard
+from .extensions import db, guard
 from .models import User, Job, WorkExperience, Skill, RelatedSkills, SavedJob, \
     WorkExperienceSkills, JobSkills, Application
 from tqdm import tqdm  # progress bar
