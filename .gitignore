@@ -6,6 +6,8 @@ client/.pnp
 client/.pnp.js
 server/venv
 __pycache__
+.idea
+.vscode
 
 
 # testing
@@ -26,7 +28,6 @@ server/.env
 client/npm-debug.log*
 client/yarn-debug.log*
 client/yarn-error.log*
+server/logs
 
-.idea
-.vscode
-data
+server/data
