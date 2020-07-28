@@ -1,12 +1,11 @@
 from flask import Blueprint, jsonify, request
-from flask_praetorian import auth_required
-from .extensions import guard, db
-from .models import User
+from api.extensions import guard, db
+from api.models import User
 
-api = Blueprint('api', __name__)
+auth = Blueprint('auth', __name__)
 
 
-@api.route('/login', methods=['POST'])
+@auth.route('/login', methods=['POST'])
 def login():
     req = request
     json_data = req.get_json()
@@ -32,7 +31,7 @@ def login():
     return jsonify({'access_token': token}), 200
 
 
-@api.route('/register', methods=['POST'])
+@auth.route('/register', methods=['POST'])
 def register():
     json_data = request.get_json()
     username = json_data['username']
@@ -48,14 +47,8 @@ def register():
     return jsonify({'access_token': token}), 200
 
 
-@api.route('/refresh')
+@auth.route('/refresh')
 def refresh():
     json_data = request.get_json()
     token = guard.refresh_jwt_token(json_data['token'])
     return jsonify({'access_token': token})
-
-
-@api.route('/protected')
-@auth_required
-def protected():
-    return jsonify({'result': 'You are in a special area!'})
