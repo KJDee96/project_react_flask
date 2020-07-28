@@ -4,8 +4,10 @@ import click
 import random
 from flask.cli import with_appcontext
 from .extensions import db, guard
-from .models import User, Job, WorkExperience, Skill, RelatedSkills, SavedJob, \
-    WorkExperienceSkills, JobSkills, Application
+from .models.user import User
+from .models.job import Job
+from .models.work_experience import WorkExperience
+from .models.skill import Skill
 from tqdm import tqdm  # progress bar
 
 

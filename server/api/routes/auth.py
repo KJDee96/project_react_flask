@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from api.extensions import guard, db
-from api.models import User
+from api.models.user import User
 
 auth = Blueprint('auth', __name__)
 

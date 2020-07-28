@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_praetorian import auth_required
-from api.models import Job
+from api.models.job import Job
 from api.utils import get_tfidf, get_cosine, get_doc_ids
 
 matches = Blueprint('matches', __name__)
