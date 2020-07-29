@@ -30,8 +30,8 @@ def get_doc_ids(matches):
         i += 1
 
     id_list = []
-    matches_with_id_sorted = dict(sorted(matches_with_id.items(), key=lambda element: element[1],
-                                         reverse=True))  # result of sorted = list of tuples
+    matches_with_id_sorted = dict(sorted(matches_with_id.items(),
+                                         key=lambda element: element[1],reverse=True))  # result of sorted = list of tuples
     for x, y in list(matches_with_id_sorted.items())[:50]:  # start from 0, stop at 100
         if y != 0.0:
             id_list.append(x)

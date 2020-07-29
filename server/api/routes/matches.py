@@ -28,5 +28,14 @@ def get_tfidf_jobs():
     json_data = request.get_json()
     job = Job.query.filter_by(id=json_data['job_id']).one_or_none().job_description
     get_tfidf_model()
-
-    return jsonify(get_doc_ids(get_cosine(vector, weights, job)))
+    
+    job_list = []
+    for item in get_doc_ids(get_cosine(vector, weights, job)):
+        data = {}
+        job = Job.query.filter_by(id=item + 1).one_or_none()  # list is 0 indexed
+        for key in job.__table__.columns.keys():
+            if key != 'id':
+                data[key] = eval('job.' + key)
+        job_list.append(data)
+        
+    return jsonify(job_list)

@@ -8,6 +8,7 @@ from .models.user import User
 from .models.job import Job
 from .models.work_experience import WorkExperience
 from .models.skill import Skill
+from .models.related_skill import RelatedSkill
 from tqdm import tqdm  # progress bar
 
 
@@ -136,7 +137,7 @@ def import_related_skills(file):
                 skill = Skill.query.filter_by(name=data['name']).one_or_none()
                 for i in range(1, 10):
                     related_skill_obj = Skill.query.filter_by(name=data['related_' + str(i)]).one_or_none()
-                    related_skill = RelatedSkills(skill_id=skill.id, related_skill_id=related_skill_obj.id)
+                    related_skill = RelatedSkill(skill_id=skill.id, related_skill_id=related_skill_obj.id)
                     db.session.add(related_skill)
                     db.session.commit()
             except AttributeError:
