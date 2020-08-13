@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_praetorian import auth_required
 from api.models.job import Job
-from api.utils import get_tfidf, get_cosine, get_doc_ids
+from api.utils import get_tfidf, get_cosine, get_euc, get_doc_ids
 
 matches = Blueprint('matches', __name__)
 
@@ -22,9 +22,9 @@ def get_tfidf_model():
     return vector, weights
 
 
-@matches.route('/matching_jobs')
+@matches.route('/cosine_jobs')
 @auth_required
-def get_tfidf_jobs():
+def cosine_jobs():
     json_data = request.get_json()
     job = Job.query.filter_by(id=json_data['job_id']).one_or_none().job_description
     get_tfidf_model()
@@ -34,8 +34,25 @@ def get_tfidf_jobs():
         data = {}
         job = Job.query.filter_by(id=item + 1).one_or_none()  # list is 0 indexed
         for key in job.__table__.columns.keys():
-            if key != 'id':
-                data[key] = eval('job.' + key)
+            data[key] = eval('job.' + key)
         job_list.append(data)
         
+    return jsonify(job_list)
+
+
+@matches.route('/euc_jobs')
+@auth_required
+def euc_jobs():
+    json_data = request.get_json()
+    job = Job.query.filter_by(id=json_data['job_id']).one_or_none().job_description
+    get_tfidf_model()
+
+    job_list = []
+    for item in get_doc_ids(get_euc(vector, weights, job)):
+        data = {}
+        job = Job.query.filter_by(id=item + 1).one_or_none()  # list is 0 indexed
+        for key in job.__table__.columns.keys():
+            data[key] = eval('job.' + key)
+        job_list.append(data)
+
     return jsonify(job_list)

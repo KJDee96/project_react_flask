@@ -1,5 +1,5 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances
 
 
 def get_corpus(query):
@@ -20,6 +20,11 @@ def get_tfidf(query):
 def get_cosine(tfidf_vectorizer, weights, document):
     vector = tfidf_vectorizer.transform([document])
     return cosine_similarity(vector, weights).flatten()
+
+
+def get_euc(tfidf_vectorizer, weights, document):
+    vector = tfidf_vectorizer.transform([document])
+    return euclidean_distances(vector, weights).flatten()
 
 
 def get_doc_ids(matches):
