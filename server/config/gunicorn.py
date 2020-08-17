@@ -8,3 +8,4 @@ accesslog = '-' if os.getenv('FLASK_ENV') == 'development' else 'logs/gunicorn.l
 errorlog = '-' if os.getenv('FLASK_ENV') == 'development' else 'logs/gunicorn.error.log'
 loglevel = 'error'
 capture_output = True
+timeout = 300
