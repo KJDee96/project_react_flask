@@ -10,25 +10,12 @@ def login():
     req = request
     json_data = req.get_json()
 
-    try:
-        username = json_data['username']
-    except KeyError:
-        username = ''
-
-    try:
-        email = json_data['email']
-    except KeyError:
-        email = ''
-
+    username = json_data['username']
     password = json_data['password']
 
-    userdata = {
-        "username": username,
-        "email": email,
-    }
-    user = guard.authenticate(userdata, password)
+    user = guard.authenticate(username, password)
     token = guard.encode_jwt_token(user)
-    return jsonify({'access_token': token}), 200
+    return jsonify({'access_token': token, 'username': user.username, 'user_id': user.id}), 200
 
 
 @auth.route('/register', methods=['POST'])

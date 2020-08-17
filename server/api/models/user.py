@@ -32,11 +32,8 @@ class User(db.Model):
         return '<User {}>'.format(self.username)
 
     @classmethod
-    def lookup(cls, userdata):
-        if userdata['username'] != '':
-            return cls.query.filter_by(username=userdata["username"]).one_or_none()
-        else:
-            return cls.query.filter_by(email=userdata["email"]).one_or_none()
+    def lookup(cls, username):
+        return cls.query.filter_by(username=username).one_or_none()
 
     @classmethod
     def identify(cls, id):
@@ -49,3 +46,7 @@ class User(db.Model):
     @property
     def identity(self):
         return self.id
+
+    # https://stackoverflow.com/questions/5022066/how-to-serialize-sqlalchemy-result-to-json
+    def as_dict(self):
+        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
