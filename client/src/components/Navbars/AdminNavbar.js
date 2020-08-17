@@ -43,7 +43,7 @@ class AdminNavbar extends React.Component {
     this.state = {
       error: null,
       isLoaded: true,
-      user: {name: ""}
+      // user: {name: ""}
     };
   }
 
@@ -124,18 +124,18 @@ class AdminNavbar extends React.Component {
                         <i className="ni ni-single-02"/>
                         <span>My profile</span>
                       </DropdownItem>
-                      <DropdownItem to="/admin/user-profile" tag={Link}>
-                        <i className="ni ni-settings-gear-65"/>
-                        <span>Settings</span>
-                      </DropdownItem>
-                      <DropdownItem to="/admin/user-profile" tag={Link}>
-                        <i className="ni ni-calendar-grid-58"/>
-                        <span>Activity</span>
-                      </DropdownItem>
-                      <DropdownItem to="/admin/user-profile" tag={Link}>
-                        <i className="ni ni-support-16"/>
-                        <span>Support</span>
-                      </DropdownItem>
+                      {/*<DropdownItem to="/admin/user-profile" tag={Link}>*/}
+                      {/*  <i className="ni ni-settings-gear-65"/>*/}
+                      {/*  <span>Settings</span>*/}
+                      {/*</DropdownItem>*/}
+                      {/*<DropdownItem to="/admin/user-profile" tag={Link}>*/}
+                      {/*  <i className="ni ni-calendar-grid-58"/>*/}
+                      {/*  <span>Activity</span>*/}
+                      {/*</DropdownItem>*/}
+                      {/*<DropdownItem to="/admin/user-profile" tag={Link}>*/}
+                      {/*  <i className="ni ni-support-16"/>*/}
+                      {/*  <span>Support</span>*/}
+                      {/*</DropdownItem>*/}
                       <DropdownItem divider/>
                       <DropdownItem href="#pablo" onClick={deleteTokens}>
                         <i className="ni ni-user-run"/>

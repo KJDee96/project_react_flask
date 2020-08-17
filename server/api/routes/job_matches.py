@@ -35,7 +35,7 @@ def load_global_data():
     job_tfidf = Tfidf([r[1] for r in query])
 
 
-@job_matches.route('/cosine_jobs')
+@job_matches.route('/cosine_jobs', methods=['POST'])
 @auth_required
 def cosine_jobs():
     json_data = request.get_json()
@@ -44,7 +44,7 @@ def cosine_jobs():
     return jsonify(get_matches(get_cosine(job_tfidf.vectorizer, job_tfidf.weights, job.job_description), job.id))
 
 
-@job_matches.route('/euc_jobs')
+@job_matches.route('/euc_jobs', methods=['POST'])
 @auth_required
 def euc_jobs():
     json_data = request.get_json()
