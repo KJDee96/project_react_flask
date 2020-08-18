@@ -1,7 +1,7 @@
 from flask import Flask
 from api.routes.auth import auth
-from api.routes.job_matches import job_matches
-from api.routes.user_matches import user_matches
+from api.routes.jobs import jobs
+from api.routes.users import users
 from .extensions import db, guard, migrate
 from .commands import import_users, import_jobs, import_apps
 from config.config import Config
@@ -26,8 +26,8 @@ def create_app():
 
     # blueprints
     app.register_blueprint(auth)
-    app.register_blueprint(job_matches)
-    app.register_blueprint(user_matches)
+    app.register_blueprint(jobs)
+    app.register_blueprint(users)
 
     @app.shell_context_processor
     def make_shell_context():
