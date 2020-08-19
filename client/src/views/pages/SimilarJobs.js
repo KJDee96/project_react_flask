@@ -41,8 +41,7 @@ import {
 import Header from "components/Headers/Header.js";
 import axios from "axios";
 import {getToken, isLoggedIn} from "../../authHelpers";
-import {Link} from "react-router-dom";
-import ReactPaginate from 'react-paginate'; // https://medium.com/how-to-react/create-pagination-in-reactjs-e4326c1b9855
+import {Link, Redirect} from "react-router-dom";
 
 class Tables extends React.Component {
 
@@ -50,37 +49,27 @@ class Tables extends React.Component {
         super(props);
 
         this.state = {
-            page: 0,
-            totalPages: 50,
+            id: (new URLSearchParams(window.location.search)).get("job"),
             jobs: []
         }
+    }
+
+    getData() {
+        this.setState({id: (new URLSearchParams(window.location.search)).get("job")})
+        axios.get("/jobs/matching/cosine/" + this.state.id, {headers: {Authorization: `Bearer ${getToken()}`}}).then(response => {
+            this.setState({jobs: response.data});
+        })
     }
 
     componentDidMount() {
         this.getData()
     }
 
-    getData(){
-        axios.get("/jobs/all?page=" + this.state.page, {headers: {Authorization: `Bearer ${getToken()}`}}).then(response => {
-            this.setState({jobs: response.data['jobs']});
-            // if (this.state.totalPages === null) {
-            //     this.setState({totalPages: response.data['total']})
-            // }
-        })
-
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(prevProps.location.key !== this.props.location.key){
+            window.location.reload()
+        }
     }
-
-    handlePageClick = (e) => {
-        const selectedPage = e.selected;
-
-        this.setState({
-            page: selectedPage,
-        }, () => {
-            this.getData()
-        });
-
-    };
-
 
     render() {
         const {jobs = []} = this.state;
@@ -93,7 +82,7 @@ class Tables extends React.Component {
                         <div className="col">
                             <Card className="shadow">
                                 <CardHeader className="border-0">
-                                    <h3 className="mb-0">Jobs</h3>
+                                    <h3 className="mb-0">Similar Jobs</h3>
                                 </CardHeader>
                                 <Table className="align-items-center table-flush" responsive>
                                     <thead className="thead-light">
@@ -138,9 +127,7 @@ class Tables extends React.Component {
                                                                 href="#pablo"
                                                                 onClick={e => e.preventDefault()}
                                                             >
-                                                                <Link
-                                                                    to={"/admin/matching_jobs/?job=".concat(job['id'])}>View
-                                                                    similar jobs</Link>
+                                                                <Link to={"/admin/matching_jobs/?job=".concat(job['id'])}>View similar jobs</Link>
                                                             </DropdownItem>
 
                                                         </DropdownMenu>
@@ -200,77 +187,58 @@ class Tables extends React.Component {
                                     {/*</tr>*/}
                                     </tbody>
                                 </Table>
-                                <CardFooter className="py-4">
-                                    <nav aria-label="...">
-                                        <ReactPaginate
-                                            previousLabel={""}
-                                            previousClassName={"page-item"}
-                                            previousLinkClassName={"page-link fas fa-angle-left"}
-                                            nextLabel={""}
-                                            nextClassName={"page-item"}
-                                            nextLinkClassName={"page-link fas fa-angle-right"}
-                                            breakLabel={"..."}
-                                            breakClassName={"break-me"}
-                                            pageCount={this.state.totalPages}
-                                            marginPagesDisplayed={2}
-                                            pageRangeDisplayed={5}
-                                            onPageChange={this.handlePageClick}
-                                            containerClassName={"pagination justify-content-end mb-0"}
-                                            subContainerClassName={'pages pagination'}
-                                            activeClassName={"active"}
-                                            pageClassName={"page-item"}
-                                            pageLinkClassName={"page-link"}
-                                        />
-                                        {/*<Pagination*/}
-                                        {/*    className="pagination justify-content-end mb-0"*/}
-                                        {/*    listClassName="justify-content-end mb-0"*/}
-                                        {/*>*/}
-                                        {/*    <PaginationItem className="disabled">*/}
-                                        {/*        <PaginationLink*/}
-                                        {/*            href="#pablo"*/}
-                                        {/*            onClick={e => e.preventDefault()}*/}
-                                        {/*            tabIndex="-1"*/}
-                                        {/*        >*/}
-                                        {/*            <i className="fas fa-angle-left"/>*/}
-                                        {/*            <span className="sr-only">Previous</span>*/}
-                                        {/*        </PaginationLink>*/}
-                                        {/*    </PaginationItem>*/}
-                                        {/*    <PaginationItem className="active">*/}
-                                        {/*        <PaginationLink*/}
-                                        {/*            href="#pablo"*/}
-                                        {/*            onClick={e => e.preventDefault()}*/}
-                                        {/*        >*/}
-                                        {/*            1*/}
-                                        {/*        </PaginationLink>*/}
-                                        {/*    </PaginationItem>*/}
-                                        {/*    <PaginationItem>*/}
-                                        {/*        <PaginationLink*/}
-                                        {/*            href="#pablo"*/}
-                                        {/*            onClick={e => e.preventDefault()}*/}
-                                        {/*        >*/}
-                                        {/*            2 <span className="sr-only">(current)</span>*/}
-                                        {/*        </PaginationLink>*/}
-                                        {/*    </PaginationItem>*/}
-                                        {/*    <PaginationItem>*/}
-                                        {/*        <PaginationLink*/}
-                                        {/*            href="#pablo"*/}
-                                        {/*            onClick={e => e.preventDefault()}*/}
-                                        {/*        >*/}
-                                        {/*            3*/}
-                                        {/*        </PaginationLink>*/}
-                                        {/*    </PaginationItem>*/}
-                                        {/*    <PaginationItem>*/}
-                                        {/*        <PaginationLink*/}
-                                        {/*            href="#pablo"*/}
-                                        {/*            onClick={e => e.preventDefault()}*/}
-                                        {/*        >*/}
-                                        {/*            <i className="fas fa-angle-right"/>*/}
-                                        {/*            <span className="sr-only">Next</span>*/}
-                                        {/*        </PaginationLink>*/}
-                                        {/*    </PaginationItem>*/}
-                                        {/*</Pagination>*/}
-                                    </nav>
-                                </CardFooter>
+                                {/*<CardFooter className="py-4">*/}
+                                {/*    <nav aria-label="...">*/}
+                                {/*        <Pagination*/}
+                                {/*            className="pagination justify-content-end mb-0"*/}
+                                {/*            listClassName="justify-content-end mb-0"*/}
+                                {/*        >*/}
+                                {/*            <PaginationItem className="disabled">*/}
+                                {/*                <PaginationLink*/}
+                                {/*                    href="#pablo"*/}
+                                {/*                    onClick={e => e.preventDefault()}*/}
+                                {/*                    tabIndex="-1"*/}
+                                {/*                >*/}
+                                {/*                    <i className="fas fa-angle-left"/>*/}
+                                {/*                    <span className="sr-only">Previous</span>*/}
+                                {/*                </PaginationLink>*/}
+                                {/*            </PaginationItem>*/}
+                                {/*            <PaginationItem className="active">*/}
+                                {/*                <PaginationLink*/}
+                                {/*                    href="#pablo"*/}
+                                {/*                    onClick={e => e.preventDefault()}*/}
+                                {/*                >*/}
+                                {/*                    1*/}
+                                {/*                </PaginationLink>*/}
+                                {/*            </PaginationItem>*/}
+                                {/*            <PaginationItem>*/}
+                                {/*                <PaginationLink*/}
+                                {/*                    href="#pablo"*/}
+                                {/*                    onClick={e => e.preventDefault()}*/}
+                                {/*                >*/}
+                                {/*                    2 <span className="sr-only">(current)</span>*/}
+                                {/*                </PaginationLink>*/}
+                                {/*            </PaginationItem>*/}
+                                {/*            <PaginationItem>*/}
+                                {/*                <PaginationLink*/}
+                                {/*                    href="#pablo"*/}
+                                {/*                    onClick={e => e.preventDefault()}*/}
+                                {/*                >*/}
+                                {/*                    3*/}
+                                {/*                </PaginationLink>*/}
+                                {/*            </PaginationItem>*/}
+                                {/*            <PaginationItem>*/}
+                                {/*                <PaginationLink*/}
+                                {/*                    href="#pablo"*/}
+                                {/*                    onClick={e => e.preventDefault()}*/}
+                                {/*                >*/}
+                                {/*                    <i className="fas fa-angle-right"/>*/}
+                                {/*                    <span className="sr-only">Next</span>*/}
+                                {/*                </PaginationLink>*/}
+                                {/*            </PaginationItem>*/}
+                                {/*        </Pagination>*/}
+                                {/*    </nav>*/}
+                                {/*</CardFooter>*/}
                             </Card>
                         </div>
                     </Row>

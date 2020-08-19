@@ -1,5 +1,5 @@
 import React from "react";
-import Redirect from "react-router-dom/es/Redirect";
+import { Redirect } from "react-router-dom";
 
 export function isLoggedIn() {
     return localStorage.getItem("access_token") !== null && localStorage.getItem("access_token") !== "undefined";

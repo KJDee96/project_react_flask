@@ -22,6 +22,7 @@ import Login from "views/pages/Login.js";
 import Tables from "views/pages/Tables.js";
 import Icons from "views/pages/Icons.js";
 import Jobs from "views/pages/Jobs.js";
+import SimilarJobs from "views/pages/SimilarJobs.js"
 
 var routes = [
   {
@@ -63,6 +64,14 @@ var routes = [
     component: Jobs,
     layout: "/admin",
     visible: true
+  },
+  {
+    path: "/matching_jobs",
+    name: "Similar Jobs",
+    icon: "ni ni-briefcase-24 text-green",
+    component: SimilarJobs,
+    layout: "/admin",
+    visible: false
   },
   {
     path: "/login",
