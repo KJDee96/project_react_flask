@@ -50,9 +50,7 @@ class Tables extends React.Component {
         super(props);
 
         this.state = {
-            page: 0,
-            totalPages: 50,
-            jobs: []
+            applications: []
         }
     }
 
@@ -61,8 +59,9 @@ class Tables extends React.Component {
     }
 
     getData(){
-        axios.get("/jobs/all?page=" + this.state.page, {headers: {Authorization: `Bearer ${getToken()}`}}).then(response => {
-            this.setState({jobs: response.data['jobs']});
+        axios.get("/users/my_applications", {headers: {Authorization: `Bearer ${getToken()}`}}).then(response => {
+            this.setState({applications: response.data});
+            console.log(response)
             // if (this.state.totalPages === null) {
             //     this.setState({totalPages: response.data['total']})
             // }
@@ -70,20 +69,9 @@ class Tables extends React.Component {
 
     }
 
-    handlePageClick = (e) => {
-        const selectedPage = e.selected;
-
-        this.setState({
-            page: selectedPage,
-        }, () => {
-            this.getData()
-        });
-
-    };
-
 
     render() {
-        const {jobs = []} = this.state;
+        const {applications = []} = this.state;
         return (
             <>
                 <Header/>
@@ -93,7 +81,7 @@ class Tables extends React.Component {
                         <div className="col">
                             <Card className="shadow">
                                 <CardHeader className="border-0">
-                                    <h3 className="mb-0">Jobs</h3>
+                                    <h3 className="mb-0">My Applications</h3>
                                 </CardHeader>
                                 <Table className="align-items-center table-flush" responsive>
                                     <thead className="thead-light">
@@ -107,8 +95,8 @@ class Tables extends React.Component {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {jobs.length ?
-                                        jobs.map(job => (
+                                    {applications.length ?
+                                        applications.map(job => (
                                             <tr>
                                                 <td className="ellipsis">{job['job_title']}</td>
                                                 <td>{job['city']}</td>
@@ -210,25 +198,6 @@ class Tables extends React.Component {
                                 </Table>
                                 <CardFooter className="py-4">
                                     <nav aria-label="...">
-                                        <ReactPaginate
-                                            previousLabel={""}
-                                            previousClassName={"page-item"}
-                                            previousLinkClassName={"page-link fas fa-angle-left"}
-                                            nextLabel={""}
-                                            nextClassName={"page-item"}
-                                            nextLinkClassName={"page-link fas fa-angle-right"}
-                                            breakLabel={"..."}
-                                            breakClassName={"break-me"}
-                                            pageCount={this.state.totalPages}
-                                            marginPagesDisplayed={2}
-                                            pageRangeDisplayed={5}
-                                            onPageChange={this.handlePageClick}
-                                            containerClassName={"pagination justify-content-end mb-0"}
-                                            subContainerClassName={'pages pagination'}
-                                            activeClassName={"active"}
-                                            pageClassName={"page-item"}
-                                            pageLinkClassName={"page-link"}
-                                        />
                                         {/*<Pagination*/}
                                         {/*    className="pagination justify-content-end mb-0"*/}
                                         {/*    listClassName="justify-content-end mb-0"*/}

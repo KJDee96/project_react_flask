@@ -50,13 +50,14 @@ class Tables extends React.Component {
 
         this.state = {
             id: (new URLSearchParams(window.location.search)).get("job"),
+            type: (new URLSearchParams(window.location.search)).get("type"),
             jobs: []
         }
     }
 
     getData() {
         this.setState({id: (new URLSearchParams(window.location.search)).get("job")})
-        axios.get("/jobs/matching/cosine/" + this.state.id, {headers: {Authorization: `Bearer ${getToken()}`}}).then(response => {
+        axios.get("/jobs/matching/" + this.state.type + "/" + this.state.id, {headers: {Authorization: `Bearer ${getToken()}`}}).then(response => {
             this.setState({jobs: response.data});
         })
     }
@@ -127,7 +128,17 @@ class Tables extends React.Component {
                                                                 href="#pablo"
                                                                 onClick={e => e.preventDefault()}
                                                             >
-                                                                <Link to={"/admin/matching_jobs/?job=".concat(job['id'])}>View similar jobs</Link>
+                                                                <Link
+                                                                    to={"/admin/matching_jobs/?job=" + job['id'] + '&type=cosine'}>View
+                                                                    similar jobs - COSINE</Link>
+                                                            </DropdownItem>
+                                                            <DropdownItem
+                                                                href="#pablo"
+                                                                onClick={e => e.preventDefault()}
+                                                            >
+                                                                <Link
+                                                                    to={"/admin/matching_jobs/?job=" + job['id'] + '&type=euclidean'}>View
+                                                                    similar jobs - EUCLIDEAN</Link>
                                                             </DropdownItem>
 
                                                         </DropdownMenu>

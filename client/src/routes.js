@@ -23,6 +23,8 @@ import Tables from "views/pages/Tables.js";
 import Icons from "views/pages/Icons.js";
 import Jobs from "views/pages/Jobs.js";
 import SimilarJobs from "views/pages/SimilarJobs.js"
+import Applications from "views/pages/Applications.js"
+import RecommendedJobs from "views/pages/RecommendedJobs.js"
 
 var routes = [
   {
@@ -55,11 +57,11 @@ var routes = [
     icon: "ni ni-bullet-list-67 text-red",
     component: Tables,
     layout: "/admin",
-    visible: true
+    visible: false
   },
   {
     path: "/jobs",
-    name: "Jobs",
+    name: "All Jobs",
     icon: "ni ni-briefcase-24 text-green",
     component: Jobs,
     layout: "/admin",
@@ -72,6 +74,22 @@ var routes = [
     component: SimilarJobs,
     layout: "/admin",
     visible: false
+  },
+  {
+    path: "/recommended_jobs",
+    name: "Recommended Jobs",
+    icon: "ni ni-briefcase-24 text-green",
+    component: RecommendedJobs,
+    layout: "/admin",
+    visible: true
+  },
+  {
+    path: "/applications",
+    name: "My Applications",
+    icon: "ni ni-briefcase-24 text-green",
+    component: Applications,
+    layout: "/admin",
+    visible: true
   },
   {
     path: "/login",
