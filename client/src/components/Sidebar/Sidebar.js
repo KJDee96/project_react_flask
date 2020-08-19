@@ -81,7 +81,7 @@ class Sidebar extends React.Component {
   // creates the links that appear in the left menu / Sidebar
   createLinks = routes => {
     return routes.map((prop, key) => {
-      return (
+      if(prop.visible) return (
         <NavItem key={key}>
           <NavLink
             to={prop.layout + prop.path}
@@ -171,18 +171,18 @@ class Sidebar extends React.Component {
                   <i className="ni ni-single-02" />
                   <span>My profile</span>
                 </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
-                  <i className="ni ni-settings-gear-65" />
-                  <span>Settings</span>
-                </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
-                  <i className="ni ni-calendar-grid-58" />
-                  <span>Activity</span>
-                </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
-                  <i className="ni ni-support-16" />
-                  <span>Support</span>
-                </DropdownItem>
+                {/*<DropdownItem to="/admin/user-profile" tag={Link}>*/}
+                {/*  <i className="ni ni-settings-gear-65" />*/}
+                {/*  <span>Settings</span>*/}
+                {/*</DropdownItem>*/}
+                {/*<DropdownItem to="/admin/user-profile" tag={Link}>*/}
+                {/*  <i className="ni ni-calendar-grid-58" />*/}
+                {/*  <span>Activity</span>*/}
+                {/*</DropdownItem>*/}
+                {/*<DropdownItem to="/admin/user-profile" tag={Link}>*/}
+                {/*  <i className="ni ni-support-16" />*/}
+                {/*  <span>Support</span>*/}
+                {/*</DropdownItem>*/}
                 <DropdownItem divider />
                 <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
                   <i className="ni ni-user-run" />
@@ -297,7 +297,7 @@ Sidebar.propTypes = {
     imgSrc: PropTypes.string.isRequired,
     // the alt for the img
     imgAlt: PropTypes.string.isRequired
-  })
+  }),
 };
 
 export default Sidebar;

@@ -48,8 +48,6 @@ import {
 
 import Header from "components/Headers/Header.js";
 
-import {requiredAuth} from "authHelpers"
-
 class Index extends React.Component {
   constructor(props) {
     super(props);
@@ -74,7 +72,6 @@ class Index extends React.Component {
       <>
         <Header />
         {/* Page content */}
-        {requiredAuth()}
         <Container className="mt--7" fluid>
           <Row>
             <Col className="mb-5 mb-xl-0" xl="8">

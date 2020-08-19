@@ -31,3 +31,4 @@ client/yarn-error.log*
 server/logs
 
 server/data
+*.sql

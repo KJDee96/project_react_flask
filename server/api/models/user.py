@@ -1,5 +1,5 @@
 from api.extensions import db
-from . import gender_enum, SavedJob, Application
+from . import gender_enum, Application
 from . import role_enum
 
 
@@ -12,11 +12,18 @@ class User(db.Model):
     email = db.Column(db.Text)
     gender = db.Column(gender_enum)
     role = db.Column(role_enum)
-
-    work_experience = db.relationship('WorkExperience', backref='users', lazy='dynamic')
-
-    saved_jobs = db.relationship('Job', secondary=SavedJob,
-                                 back_populates="saved_users")
+    city = db.Column(db.Text)
+    state = db.Column(db.Text)
+    country = db.Column(db.Text)
+    zipcode = db.Column(db.Text)
+    degree_type = db.Column(db.Text)
+    major = db.Column(db.Text)
+    graduation_date = db.Column(db.Date)
+    work_history_count = db.Column(db.Integer)
+    work_history_years_experience = db.Column(db.Integer)
+    employed = db.Column(db.Boolean)
+    managed_others = db.Column(db.Boolean)
+    managed_how_many = db.Column(db.Integer)
 
     applications = db.relationship('Job', secondary=Application,
                                    back_populates="applicants")
@@ -25,11 +32,8 @@ class User(db.Model):
         return '<User {}>'.format(self.username)
 
     @classmethod
-    def lookup(cls, userdata):
-        if userdata['username'] != '':
-            return cls.query.filter_by(username=userdata["username"]).one_or_none()
-        else:
-            return cls.query.filter_by(email=userdata["email"]).one_or_none()
+    def lookup(cls, username):
+        return cls.query.filter_by(username=username).one_or_none()
 
     @classmethod
     def identify(cls, id):
@@ -42,3 +46,7 @@ class User(db.Model):
     @property
     def identity(self):
         return self.id
+
+    # https://stackoverflow.com/questions/5022066/how-to-serialize-sqlalchemy-result-to-json
+    def as_dict(self):
+        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}

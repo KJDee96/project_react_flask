@@ -1,23 +1,25 @@
 from api.extensions import db
-from . import job_type_enum, JobSkill, Application, SavedJob
+from . import Application
 
 
 class Job(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    category = db.Column(db.Text)
-    company_name = db.Column(db.Text)
-    job_description = db.Column(db.Text)
     job_title = db.Column(db.Text)
-    job_type = db.Column(job_type_enum)
-    location = db.Column(db.Text)
-    post_date = db.Column(db.Date)
-    salary_offered = db.Column(db.Text)
-    skills = db.relationship('Skill', secondary=JobSkill,
-                             back_populates="jobs")
+    job_description = db.Column(db.Text)
+    requirements = db.Column(db.Text)
+    city = db.Column(db.Text)
+    state = db.Column(db.Text)
+    country = db.Column(db.Text)
+    zipcode = db.Column(db.Text)
+    start_date = db.Column(db.Date)
+    end_date = db.Column(db.Date)
+
     applicants = db.relationship('User', secondary=Application,
                                  back_populates="applications")
-    saved_users = db.relationship('User', secondary=SavedJob,
-                                  back_populates="saved_jobs")
 
     def __repr__(self):
         return '<Job {}>'.format(self.job_title)
+
+    # https://stackoverflow.com/questions/5022066/how-to-serialize-sqlalchemy-result-to-json
+    def as_dict(self):
+        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
