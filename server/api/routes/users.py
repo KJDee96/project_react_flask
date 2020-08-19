@@ -92,24 +92,34 @@ def get_profile_from_token():
     return jsonify(user.as_dict())
 
 
-@users.route('/users/matching/<sim_type>/<user_id>', methods=['GET'])
+@users.route('/users/my_applications', methods=['GET'])
 @auth_required
-def matching_jobs(sim_type, user_id):
+def get_applications():
+    token = guard.read_token_from_header()
+    user = User.query.filter_by(id=guard.extract_jwt_token(token)['id']).one()
+    return jsonify(user.as_dict())
+
+
+@users.route('/users/matching/<sim_type>', methods=['GET'])
+@auth_required
+def matching_jobs(sim_type):
+    token = guard.read_token_from_header()
     user = User.query.with_entities(User.id, User.degree_type, User.major, User.work_history_count,
                                     User.work_history_years_experience, User.employed, User.managed_others,
-                                    User.managed_how_many).filter_by(id=user_id).one_or_none()
+                                    User.managed_how_many).filter_by(id=guard.extract_jwt_token(token)['id']).one()
     if sim_type == 'cosine':
         return jsonify(get_user_matches(get_cosine(user_tfidf.vectorizer, user_tfidf.weights, generate_user_corpus(user)), user.id))
     elif sim_type == 'euclidean':
         return jsonify(get_user_matches(get_euc(user_tfidf.vectorizer, user_tfidf.weights, generate_user_corpus(user)), user.id))
 
 
-@users.route('/users/applications/matching/<sim_type>/<user_id>', methods=['GET'])
+@users.route('/users/my_applications/matching/<sim_type>/', methods=['GET'])
 @auth_required
-def matching_applications(sim_type, user_id):
+def matching_applications(sim_type):
+    token = guard.read_token_from_header()
     user = User.query.with_entities(User.id, User.degree_type, User.major, User.work_history_count,
-                                User.work_history_years_experience, User.employed, User.managed_others,
-                                User.managed_how_many).filter_by(id=user_id).one_or_none()
+                                    User.work_history_years_experience, User.employed, User.managed_others,
+                                    User.managed_how_many).filter_by(id=guard.extract_jwt_token(token)['id']).one()
     if sim_type == 'cosine':
         return jsonify(get_jobs_based_on_users(get_cosine(user_tfidf.vectorizer, user_tfidf.weights, generate_user_corpus(user)), user.id))
     elif sim_type == 'euclidean':
