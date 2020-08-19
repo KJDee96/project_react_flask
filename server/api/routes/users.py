@@ -96,8 +96,8 @@ def get_profile_from_token():
 @auth_required
 def get_applications():
     token = guard.read_token_from_header()
-    user = User.query.filter_by(id=guard.extract_jwt_token(token)['id']).one()
-    return jsonify(user.as_dict())
+    applications = User.query.filter_by(id=guard.extract_jwt_token(token)['id']).one().applications
+    return jsonify([job.as_dict() for job in applications])
 
 
 @users.route('/users/matching/<sim_type>', methods=['GET'])
