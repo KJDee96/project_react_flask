@@ -139,16 +139,16 @@ class Tables extends React.Component {
                                                                 onClick={e => e.preventDefault()}
                                                             >
                                                                 <Link
-                                                                    to={"/admin/matching_jobs/?job=" + job['id'] + '&type=cosine'}>View
-                                                                    similar jobs - COSINE</Link>
+                                                                    to={"/admin/matching_jobs/?job=" + job['id'] + '&type=cosine'}>DEBUG - View
+                                                                    similar jobs - Metric 1</Link>
                                                             </DropdownItem>
                                                             <DropdownItem
                                                                 href="#pablo"
                                                                 onClick={e => e.preventDefault()}
                                                             >
                                                                 <Link
-                                                                    to={"/admin/matching_jobs/?job=" + job['id'] + '&type=euclidean'}>View
-                                                                    similar jobs - EUCLIDEAN</Link>
+                                                                    to={"/admin/matching_jobs/?job=" + job['id'] + '&type=euclidean'}>DEBUG - View
+                                                                    similar jobs - Metric 2</Link>
                                                             </DropdownItem>
 
                                                         </DropdownMenu>

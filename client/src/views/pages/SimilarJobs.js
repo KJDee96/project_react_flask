@@ -51,12 +51,18 @@ class Tables extends React.Component {
         this.state = {
             id: (new URLSearchParams(window.location.search)).get("job"),
             type: (new URLSearchParams(window.location.search)).get("type"),
+            job: '',
             jobs: []
         }
     }
 
     getData() {
         this.setState({id: (new URLSearchParams(window.location.search)).get("job")})
+
+        axios.get("/jobs/" + this.state.id, {headers: {Authorization: `Bearer ${getToken()}`}}).then(response => {
+            this.setState({job: response.data});
+        })
+
         axios.get("/jobs/matching/" + this.state.type + "/" + this.state.id, {headers: {Authorization: `Bearer ${getToken()}`}}).then(response => {
             this.setState({jobs: response.data});
         })
@@ -83,7 +89,7 @@ class Tables extends React.Component {
                         <div className="col">
                             <Card className="shadow">
                                 <CardHeader className="border-0">
-                                    <h3 className="mb-0">Similar Jobs</h3>
+                                    <h3 className="mb-0">Similar Jobs to {this.state.job['job_title']}</h3>
                                 </CardHeader>
                                 <Table className="align-items-center table-flush" responsive>
                                     <thead className="thead-light">
@@ -129,16 +135,16 @@ class Tables extends React.Component {
                                                                 onClick={e => e.preventDefault()}
                                                             >
                                                                 <Link
-                                                                    to={"/admin/matching_jobs/?job=" + job['id'] + '&type=cosine'}>View
-                                                                    similar jobs - COSINE</Link>
+                                                                    to={"/admin/matching_jobs/?job=" + job['id'] + '&type=cosine'}>DEBUG - View
+                                                                    similar jobs - Metric 1</Link>
                                                             </DropdownItem>
                                                             <DropdownItem
                                                                 href="#pablo"
                                                                 onClick={e => e.preventDefault()}
                                                             >
                                                                 <Link
-                                                                    to={"/admin/matching_jobs/?job=" + job['id'] + '&type=euclidean'}>View
-                                                                    similar jobs - EUCLIDEAN</Link>
+                                                                    to={"/admin/matching_jobs/?job=" + job['id'] + '&type=euclidean'}>DEBUG - View
+                                                                    similar jobs - Metric 2</Link>
                                                             </DropdownItem>
 
                                                         </DropdownMenu>
