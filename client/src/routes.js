@@ -29,7 +29,7 @@ import RecommendedJobs from "views/pages/RecommendedJobs.js"
 var routes = [
   {
     path: "/index",
-    name: "Dashboard",
+    name: "Admin Dashboard Example",
     icon: "ni ni-tv-2 text-primary",
     component: Index,
     layout: "/admin",
@@ -43,14 +43,14 @@ var routes = [
     layout: "/admin",
     visible: false
   },
-  {
-    path: "/user-profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: Profile,
-    layout: "/admin",
-    visible: true
-  },
+  // {
+  //   path: "/user-profile",
+  //   name: "User Profile",
+  //   icon: "ni ni-single-02 text-yellow",
+  //   component: Profile,
+  //   layout: "/admin",
+  //   visible: true
+  // },
   {
     path: "/tables",
     name: "Tables",
