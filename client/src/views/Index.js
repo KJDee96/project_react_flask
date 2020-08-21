@@ -82,7 +82,7 @@ class Index extends React.Component {
                       <h6 className="text-uppercase text-light ls-1 mb-1">
                         Overview
                       </h6>
-                      <h2 className="text-white mb-0">Sales value</h2>
+                      <h2 className="text-white mb-0">Jobs posted per month</h2>
                     </div>
                     <div className="col">
                       <Nav className="justify-content-end" pills>
@@ -135,7 +135,7 @@ class Index extends React.Component {
                       <h6 className="text-uppercase text-muted ls-1 mb-1">
                         Performance
                       </h6>
-                      <h2 className="mb-0">Total orders</h2>
+                      <h2 className="mb-0">Jobs posted per month</h2>
                     </div>
                   </Row>
                 </CardHeader>
@@ -157,7 +157,7 @@ class Index extends React.Component {
                 <CardHeader className="border-0">
                   <Row className="align-items-center">
                     <div className="col">
-                      <h3 className="mb-0">Page visits</h3>
+                      <h3 className="mb-0">Most popular jobs</h3>
                     </div>
                     <div className="col text-right">
                       <Button
@@ -182,7 +182,7 @@ class Index extends React.Component {
                   </thead>
                   <tbody>
                     <tr>
-                      <th scope="row">/argon/</th>
+                      <th scope="row">Counter Sales Asheville NC Sales</th>
                       <td>4,569</td>
                       <td>340</td>
                       <td>
@@ -191,7 +191,7 @@ class Index extends React.Component {
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">/argon/index.html</th>
+                      <th scope="row">SAP IT Process Specialist</th>
                       <td>3,985</td>
                       <td>319</td>
                       <td>
@@ -200,7 +200,7 @@ class Index extends React.Component {
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">/argon/charts.html</th>
+                      <th scope="row">Supervisor of Clinical Services</th>
                       <td>3,513</td>
                       <td>294</td>
                       <td>
@@ -209,7 +209,7 @@ class Index extends React.Component {
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">/argon/tables.html</th>
+                      <th scope="row">Clinical Nurse II</th>
                       <td>2,050</td>
                       <td>147</td>
                       <td>
@@ -218,7 +218,7 @@ class Index extends React.Component {
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">/argon/profile.html</th>
+                      <th scope="row">Registered Nurse (RN) - Dialysis</th>
                       <td>1,795</td>
                       <td>190</td>
                       <td>
@@ -235,7 +235,7 @@ class Index extends React.Component {
                 <CardHeader className="border-0">
                   <Row className="align-items-center">
                     <div className="col">
-                      <h3 className="mb-0">Social traffic</h3>
+                      <h3 className="mb-0">Social Registrations</h3>
                     </div>
                     <div className="col text-right">
                       <Button
@@ -259,7 +259,7 @@ class Index extends React.Component {
                   </thead>
                   <tbody>
                     <tr>
-                      <th scope="row">Facebook</th>
+                      <th scope="row">Google</th>
                       <td>1,480</td>
                       <td>
                         <div className="d-flex align-items-center">
@@ -291,7 +291,7 @@ class Index extends React.Component {
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">Google</th>
+                      <th scope="row">Twitter</th>
                       <td>4,807</td>
                       <td>
                         <div className="d-flex align-items-center">
@@ -303,7 +303,7 @@ class Index extends React.Component {
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">Instagram</th>
+                      <th scope="row">LinkedIn</th>
                       <td>3,678</td>
                       <td>
                         <div className="d-flex align-items-center">
@@ -319,7 +319,7 @@ class Index extends React.Component {
                       </td>
                     </tr>
                     <tr>
-                      <th scope="row">twitter</th>
+                      <th scope="row">Indeed</th>
                       <td>2,645</td>
                       <td>
                         <div className="d-flex align-items-center">
