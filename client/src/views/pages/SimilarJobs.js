@@ -73,7 +73,7 @@ class Tables extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps.location.key !== this.props.location.key){
+        if (prevProps.location.key !== this.props.location.key) {
             window.location.reload()
         }
     }
@@ -135,7 +135,8 @@ class Tables extends React.Component {
                                                                 onClick={e => e.preventDefault()}
                                                             >
                                                                 <Link
-                                                                    to={"/admin/matching_jobs/?job=" + job['id'] + '&type=cosine'}>DEBUG - View
+                                                                    to={"/admin/matching_jobs/?job=" + job['id'] + '&type=cosine'}>DEBUG
+                                                                    - View
                                                                     similar jobs - Metric 1</Link>
                                                             </DropdownItem>
                                                             <DropdownItem
@@ -143,7 +144,8 @@ class Tables extends React.Component {
                                                                 onClick={e => e.preventDefault()}
                                                             >
                                                                 <Link
-                                                                    to={"/admin/matching_jobs/?job=" + job['id'] + '&type=euclidean'}>DEBUG - View
+                                                                    to={"/admin/matching_jobs/?job=" + job['id'] + '&type=euclidean'}>DEBUG
+                                                                    - View
                                                                     similar jobs - Metric 2</Link>
                                                             </DropdownItem>
 
@@ -161,101 +163,8 @@ class Tables extends React.Component {
                                             <td>-</td>
                                         </tr>)
                                     }
-                                    {/*<tr>*/}
-                                    {/*    <th scope="row">*/}
-                                    {/*    </th>*/}
-                                    {/*    <td>*/}
-                                    {/*    </td>*/}
-                                    {/*    <td>*/}
-                                    {/*    </td>*/}
-                                    {/*    <td>*/}
-                                    {/*    </td>*/}
-                                    {/*    <td>*/}
-                                    {/*    </td>*/}
-                                    {/*    <td className="text-right">*/}
-                                    {/*        <UncontrolledDropdown>*/}
-                                    {/*            <DropdownToggle*/}
-                                    {/*                className="btn-icon-only text-light"*/}
-                                    {/*                href="#pablo"*/}
-                                    {/*                role="button"*/}
-                                    {/*                size="sm"*/}
-                                    {/*                color=""*/}
-                                    {/*                onClick={e => e.preventDefault()}*/}
-                                    {/*            >*/}
-                                    {/*                <i className="fas fa-ellipsis-v"/>*/}
-                                    {/*            </DropdownToggle>*/}
-                                    {/*            <DropdownMenu className="dropdown-menu-arrow" right>*/}
-                                    {/*                <DropdownItem*/}
-                                    {/*                    href="#pablo"*/}
-                                    {/*                    onClick={e => e.preventDefault()}*/}
-                                    {/*                >*/}
-                                    {/*                    View job*/}
-                                    {/*                </DropdownItem>*/}
-                                    {/*                <DropdownItem*/}
-                                    {/*                    href="#pablo"*/}
-                                    {/*                    onClick={e => e.preventDefault()}*/}
-                                    {/*                >*/}
-                                    {/*                    View similar jobs*/}
-                                    {/*                </DropdownItem>*/}
-
-                                    {/*            </DropdownMenu>*/}
-                                    {/*        </UncontrolledDropdown>*/}
-                                    {/*    </td>*/}
-                                    {/*</tr>*/}
                                     </tbody>
                                 </Table>
-                                {/*<CardFooter className="py-4">*/}
-                                {/*    <nav aria-label="...">*/}
-                                {/*        <Pagination*/}
-                                {/*            className="pagination justify-content-end mb-0"*/}
-                                {/*            listClassName="justify-content-end mb-0"*/}
-                                {/*        >*/}
-                                {/*            <PaginationItem className="disabled">*/}
-                                {/*                <PaginationLink*/}
-                                {/*                    href="#pablo"*/}
-                                {/*                    onClick={e => e.preventDefault()}*/}
-                                {/*                    tabIndex="-1"*/}
-                                {/*                >*/}
-                                {/*                    <i className="fas fa-angle-left"/>*/}
-                                {/*                    <span className="sr-only">Previous</span>*/}
-                                {/*                </PaginationLink>*/}
-                                {/*            </PaginationItem>*/}
-                                {/*            <PaginationItem className="active">*/}
-                                {/*                <PaginationLink*/}
-                                {/*                    href="#pablo"*/}
-                                {/*                    onClick={e => e.preventDefault()}*/}
-                                {/*                >*/}
-                                {/*                    1*/}
-                                {/*                </PaginationLink>*/}
-                                {/*            </PaginationItem>*/}
-                                {/*            <PaginationItem>*/}
-                                {/*                <PaginationLink*/}
-                                {/*                    href="#pablo"*/}
-                                {/*                    onClick={e => e.preventDefault()}*/}
-                                {/*                >*/}
-                                {/*                    2 <span className="sr-only">(current)</span>*/}
-                                {/*                </PaginationLink>*/}
-                                {/*            </PaginationItem>*/}
-                                {/*            <PaginationItem>*/}
-                                {/*                <PaginationLink*/}
-                                {/*                    href="#pablo"*/}
-                                {/*                    onClick={e => e.preventDefault()}*/}
-                                {/*                >*/}
-                                {/*                    3*/}
-                                {/*                </PaginationLink>*/}
-                                {/*            </PaginationItem>*/}
-                                {/*            <PaginationItem>*/}
-                                {/*                <PaginationLink*/}
-                                {/*                    href="#pablo"*/}
-                                {/*                    onClick={e => e.preventDefault()}*/}
-                                {/*                >*/}
-                                {/*                    <i className="fas fa-angle-right"/>*/}
-                                {/*                    <span className="sr-only">Next</span>*/}
-                                {/*                </PaginationLink>*/}
-                                {/*            </PaginationItem>*/}
-                                {/*        </Pagination>*/}
-                                {/*    </nav>*/}
-                                {/*</CardFooter>*/}
                             </Card>
                         </div>
                     </Row>

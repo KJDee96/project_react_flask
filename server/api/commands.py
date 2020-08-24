@@ -6,6 +6,7 @@ from .extensions import db, guard
 from .models.user import User
 from .models.job import Job
 from tqdm import tqdm  # progress bar
+from bs4 import BeautifulSoup
 
 
 def csv_row_count(file, tsv):
@@ -79,7 +80,8 @@ def import_jobs():
             try:
                 job = Job(id=row['JobID'],
                           job_title=row['Title'],
-                          job_description=row['Description'],
+                          job_description_original=row['Description'],
+                          job_description=BeautifulSoup(row['Description'], "lxml").get_text().replace('\xa0', ' '),
                           requirements=row['Requirements'],
                           city=row['City'],
                           state=row['State'],
